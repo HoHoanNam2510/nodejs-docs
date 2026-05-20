@@ -1970,17 +1970,19 @@ export default function Nav() {
 
 **Checklist**:
 
-- [ ] `src/pages/MongoDBCore/index.tsx` — orchestrator, `useProgress('module_04', 12)`
-- [ ] `src/pages/MongoDBCore/_helpers.tsx` + `_toc.ts`
-- [ ] Lesson01–12: Mongoose generics xuyên suốt
-- [ ] Bài 3: Interface + Schema generic + Model typed
-- [ ] Bài 5: Static methods với `IUserModel extends Model<IUser>`
-- [ ] Bài 7: Handling `IUser | null` — TypeScript null safety
-- [ ] Bài 11: Generic `paginate<T>()` function
-- [ ] Bài 12: `populate<{ author: IUser }>()` pattern
-- [ ] `src/pages/MongoDBCore/ProjectSection.tsx` — Blog API skeleton typed
+- [x] `src/pages/MongoDBCore/index.tsx` — orchestrator, `useProgress('module_04', 12)`
+- [x] `src/pages/MongoDBCore/_helpers.tsx` + `_toc.ts`
+- [x] Lesson01–12: Mongoose generics xuyên suốt
+- [x] Bài 3: Interface + Schema generic + Model typed
+- [x] Bài 5: Static methods với `IUserModel extends Model<IUser>`
+- [x] Bài 7: Handling `IUser | null` — TypeScript null safety
+- [x] Bài 11: Generic `paginate<T>()` function
+- [x] Bài 12: `populate<{ author: IUser }>()` pattern
+- [x] `src/pages/MongoDBCore/ProjectSection.tsx` — Blog API skeleton typed
 
 **Output**: `src/pages/MongoDBCore/` folder (cùng cấu trúc với NenTang/)
+
+> **✅ COMPLETED** — `npx tsc --noEmit && npm run build` thành công, 0 TypeScript errors. 116 modules transformed. Xóa stub `MongoDBCore.tsx` để folder/index.tsx resolve đúng.
 
 ---
 
