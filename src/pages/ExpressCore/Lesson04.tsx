@@ -5,7 +5,10 @@ import ExerciseSection from '../../components/ExerciseSection';
 import Callout from '../../components/Callout';
 import { Sec, Flow } from './_helpers';
 
-interface Props { isDone: boolean; onToggleDone: () => void; }
+interface Props {
+  isDone: boolean;
+  onToggleDone: () => void;
+}
 
 const BASIC = `import { Request, Response } from 'express';
 
@@ -90,41 +93,76 @@ export default function Lesson04({ isDone, onToggleDone }: Props) {
       onToggleDone={onToggleDone}
     >
       <Sec title="Khái niệm">
-        <code>req.params</code> chứa các dynamic segments từ URL path (ví dụ <code>:id</code>),
-        luôn có type <code>string</code> dù route pattern có vẻ như nhận số.
+        <code>req.params</code> chứa các dynamic segments từ URL path (ví dụ <code>:id</code>), luôn
+        có type <code>string</code> dù route pattern có vẻ như nhận số.
         <code>req.query</code> chứa query string parameters sau dấu <code>?</code>, có type
-        <code>ParsedQs</code> — mỗi field có thể là <code>string | string[] | ParsedQs | undefined</code>.
-        Cả hai đều cần parse và validate thủ công khi cần dùng như số hay enum.
+        <code>ParsedQs</code> — mỗi field có thể là{' '}
+        <code>string | string[] | ParsedQs | undefined</code>. Cả hai đều cần parse và validate thủ
+        công khi cần dùng như số hay enum.
       </Sec>
 
       <Sec title="Luồng hoạt động">
-        <Flow steps={[
-          'Định nghĩa route với :param trong path: /users/:id',
-          'Khai báo Params generic cho Request: Request<{ id: string }>',
-          'req.params.id luôn là string — cần parse nếu cần số: Number(req.params.id)',
-          'req.query có type ParsedQs — cần cast hoặc destructure cẩn thận',
-          'Validate sau khi parse: kiểm tra isNaN(), bounds, etc.',
-        ]} />
+        <Flow
+          steps={[
+            'Định nghĩa route với :param trong path: /users/:id',
+            'Khai báo Params generic cho Request: Request<{ id: string }>',
+            'req.params.id luôn là string — cần parse nếu cần số: Number(req.params.id)',
+            'req.query có type ParsedQs — cần cast hoặc destructure cẩn thận',
+            'Validate sau khi parse: kiểm tra isNaN(), bounds, etc.',
+          ]}
+        />
       </Sec>
 
       <Sec title="Code ví dụ">
-        <CodeTabs tabs={[
-          { label: 'Cơ bản .ts', code: BASIC },
-          { label: 'Thực tế .ts', code: REAL },
-          { label: 'Sai lầm .ts', code: MISTAKE },
-        ]} />
+        <CodeTabs
+          tabs={[
+            { label: 'Cơ bản .ts', code: BASIC },
+            { label: 'Thực tế .ts', code: REAL },
+            { label: 'Sai lầm .ts', code: MISTAKE },
+          ]}
+        />
       </Sec>
 
       <Sec title="Giải thích từng dòng">
-        <LineTable rows={[
-          { line: '1',  explanation: 'Request<Params, ResBody, ReqBody, Query> — 4 generics theo thứ tự. Bỏ qua params giữa dùng {} làm placeholder.' },
-          { line: '2',  explanation: 'Request<{ id: string }> — type Params object. TypeScript enforce req.params.id là string, báo lỗi nếu truy cập field không khai báo.' },
-          { line: '3',  explanation: 'ParsedQs — type của req.query từ package qs. Mỗi field: string | string[] | ParsedQs | ParsedQs[] | undefined. Cần cast khi dùng.' },
-          { line: '4',  explanation: 'Number(req.query.page) — convert string sang number. Trả NaN nếu không phải số. Kết hợp với || 1 để có default value.' },
-          { line: '5',  explanation: 'Math.max(1, ...) / Math.min(100, ...) — clamp giá trị trong range hợp lệ. Ngăn page=0 hoặc limit=99999.' },
-          { line: '6',  explanation: 'req.query.sort ?? "createdAt" — nullish coalescing: dùng default "createdAt" khi sort là undefined hoặc null.' },
-          { line: '7',  explanation: 'Request<{}, {}, {}, PaginationQuery> — 4th generic type req.query. IDE autocomplete req.query.page, req.query.limit, ...' },
-        ]} />
+        <LineTable
+          rows={[
+            {
+              line: '1',
+              explanation:
+                'Request<Params, ResBody, ReqBody, Query> — 4 generics theo thứ tự. Bỏ qua params giữa dùng {} làm placeholder.',
+            },
+            {
+              line: '2',
+              explanation:
+                'Request<{ id: string }> — type Params object. TypeScript enforce req.params.id là string, báo lỗi nếu truy cập field không khai báo.',
+            },
+            {
+              line: '3',
+              explanation:
+                'ParsedQs — type của req.query từ package qs. Mỗi field: string | string[] | ParsedQs | ParsedQs[] | undefined. Cần cast khi dùng.',
+            },
+            {
+              line: '4',
+              explanation:
+                'Number(req.query.page) — convert string sang number. Trả NaN nếu không phải số. Kết hợp với || 1 để có default value.',
+            },
+            {
+              line: '5',
+              explanation:
+                'Math.max(1, ...) / Math.min(100, ...) — clamp giá trị trong range hợp lệ. Ngăn page=0 hoặc limit=99999.',
+            },
+            {
+              line: '6',
+              explanation:
+                'req.query.sort ?? "createdAt" — nullish coalescing: dùng default "createdAt" khi sort là undefined hoặc null.',
+            },
+            {
+              line: '7',
+              explanation:
+                'Request<{}, {}, {}, PaginationQuery> — 4th generic type req.query. IDE autocomplete req.query.page, req.query.limit, ...',
+            },
+          ]}
+        />
       </Sec>
 
       <Sec title="Lỗi thường gặp">
@@ -134,9 +172,12 @@ export default function Lesson04({ isDone, onToggleDone }: Props) {
           <code>items[req.params.id]</code> trả <code>undefined</code> nếu items là array.
         </Callout>
         <Callout type="note">
-          Dùng 4th generic của <code>Request&lt;P, RB, B, Q&gt;</code> để type <code>req.query</code>:
-          <code>Request&lt;{"{}"}, {"{}"}, {"{}"}, {"{ page?: string }"}&gt;</code>. IDE sẽ autocomplete
-          đúng tên các query params bạn khai báo.
+          Dùng 4th generic của <code>Request&lt;P, RB, B, Q&gt;</code> để type{' '}
+          <code>req.query</code>:
+          <code>
+            Request&lt;{'{}'}, {'{}'}, {'{}'}, {'{ page?: string }'}&gt;
+          </code>
+          . IDE sẽ autocomplete đúng tên các query params bạn khai báo.
         </Callout>
       </Sec>
 

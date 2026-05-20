@@ -5,7 +5,10 @@ import ExerciseSection from '../../components/ExerciseSection';
 import Callout from '../../components/Callout';
 import { Sec, Flow } from './_helpers';
 
-interface Props { isDone: boolean; onToggleDone: () => void; }
+interface Props {
+  isDone: boolean;
+  onToggleDone: () => void;
+}
 
 const BASIC = `import { ErrorRequestHandler } from 'express';
 
@@ -173,54 +176,80 @@ export default function Lesson09({ isDone, onToggleDone }: Props) {
       onToggleDone={onToggleDone}
     >
       <Sec title="Khái niệm">
-        Express phân biệt error handler với regular middleware bằng số tham số — error handler
-        phải có đúng <strong>4 tham số</strong>: <code>(err, req, res, next)</code>. TypeScript
-        cung cấp type <code>ErrorRequestHandler</code> đảm bảo signature đúng. Pattern chuẩn:
-        tạo <code>AppError</code> class extends <code>Error</code> với <code>statusCode</code>,
-        dùng <code>asyncHandler</code> wrapper để bắt async errors, đặt error handler cuối cùng
-        sau tất cả routes.
+        Express phân biệt error handler với regular middleware bằng số tham số — error handler phải
+        có đúng <strong>4 tham số</strong>: <code>(err, req, res, next)</code>. TypeScript cung cấp
+        type <code>ErrorRequestHandler</code> đảm bảo signature đúng. Pattern chuẩn: tạo{' '}
+        <code>AppError</code> class extends <code>Error</code> với <code>statusCode</code>, dùng{' '}
+        <code>asyncHandler</code> wrapper để bắt async errors, đặt error handler cuối cùng sau tất
+        cả routes.
       </Sec>
 
       <Sec title="Luồng hoạt động">
-        <Flow steps={[
-          'Tạo AppError class extends Error với statusCode',
-          'Trong route handler: throw new AppError(message, statusCode) hoặc next(new AppError(...))',
-          'Express nhận diện error handler bằng đúng 4 tham số: (err, req, res, next)',
-          'Khai báo type ErrorRequestHandler từ express',
-          'Đặt error handler sau tất cả routes — cuối cùng trong app.ts',
-        ]} />
+        <Flow
+          steps={[
+            'Tạo AppError class extends Error với statusCode',
+            'Trong route handler: throw new AppError(message, statusCode) hoặc next(new AppError(...))',
+            'Express nhận diện error handler bằng đúng 4 tham số: (err, req, res, next)',
+            'Khai báo type ErrorRequestHandler từ express',
+            'Đặt error handler sau tất cả routes — cuối cùng trong app.ts',
+          ]}
+        />
       </Sec>
 
       <Sec title="Code ví dụ">
-        <CodeTabs tabs={[
-          { label: 'Cơ bản .ts', code: BASIC },
-          { label: 'Thực tế .ts', code: REAL },
-          { label: 'Sai lầm .ts', code: MISTAKE },
-          { label: 'So sánh JS→TS', code: JSOTS },
-        ]} />
+        <CodeTabs
+          tabs={[
+            { label: 'Cơ bản .ts', code: BASIC },
+            { label: 'Thực tế .ts', code: REAL },
+            { label: 'Sai lầm .ts', code: MISTAKE },
+            { label: 'So sánh JS→TS', code: JSOTS },
+          ]}
+        />
       </Sec>
 
       <Sec title="Giải thích từng dòng">
-        <LineTable rows={[
-          { line: '1',  explanation: 'ErrorRequestHandler — type cho error middleware. Signature: (err: any, req: Request, res: Response, next: NextFunction) => void. 4 params bắt buộc.' },
-          { line: '2',  explanation: 'next(err) vs throw — trong async function, cả hai đều hoạt động khi dùng asyncHandler. Trong sync code, dùng next(err) để chuyển lỗi đến error handler.' },
-          { line: '3',  explanation: 'asyncHandler HOF — Higher Order Function nhận async RequestHandler, wrap trong Promise.resolve().catch(next). Mọi rejected promise tự động gọi next(err).' },
-          { line: '4',  explanation: 'instanceof AppError — type narrowing. Sau kiểm tra này, TypeScript biết err có statusCode và code properties. Không cần cast thủ công.' },
-          { line: '5',  explanation: 'process.env.NODE_ENV === "production" — ẩn stack trace và internal error messages khi production. Tránh lộ thông tin nhạy cảm cho client.' },
-        ]} />
+        <LineTable
+          rows={[
+            {
+              line: '1',
+              explanation:
+                'ErrorRequestHandler — type cho error middleware. Signature: (err: any, req: Request, res: Response, next: NextFunction) => void. 4 params bắt buộc.',
+            },
+            {
+              line: '2',
+              explanation:
+                'next(err) vs throw — trong async function, cả hai đều hoạt động khi dùng asyncHandler. Trong sync code, dùng next(err) để chuyển lỗi đến error handler.',
+            },
+            {
+              line: '3',
+              explanation:
+                'asyncHandler HOF — Higher Order Function nhận async RequestHandler, wrap trong Promise.resolve().catch(next). Mọi rejected promise tự động gọi next(err).',
+            },
+            {
+              line: '4',
+              explanation:
+                'instanceof AppError — type narrowing. Sau kiểm tra này, TypeScript biết err có statusCode và code properties. Không cần cast thủ công.',
+            },
+            {
+              line: '5',
+              explanation:
+                'process.env.NODE_ENV === "production" — ẩn stack trace và internal error messages khi production. Tránh lộ thông tin nhạy cảm cho client.',
+            },
+          ]}
+        />
       </Sec>
 
       <Sec title="Lỗi thường gặp">
         <Callout type="warn">
           Express 4 không tự bắt async errors — phải dùng <code>asyncHandler</code> wrapper hoặc
-          explicit <code>try/catch</code> + <code>next(error)</code>. Express 5 (beta) tự bắt
-          nhưng chưa stable. Quên wrap → <code>UnhandledPromiseRejectionWarning</code>, server
-          có thể crash.
+          explicit <code>try/catch</code> + <code>next(error)</code>. Express 5 (beta) tự bắt nhưng
+          chưa stable. Quên wrap → <code>UnhandledPromiseRejectionWarning</code>, server có thể
+          crash.
         </Callout>
         <Callout type="note">
           Error handler PHẢI đứng sau tất cả <code>app.use()</code> và routes. Express xử lý
-          middleware theo thứ tự — error handler ở sai vị trí sẽ không bao giờ được gọi, lỗi
-          sẽ rơi vào Express default handler (trả HTML thay vì JSON).
+          middleware theo thứ tự — error handler ở sai vị trí sẽ không bao giờ được gọi, lỗi sẽ rơi
+          vào Express default handler (trả HTML thay vì JSON).
         </Callout>
       </Sec>
 

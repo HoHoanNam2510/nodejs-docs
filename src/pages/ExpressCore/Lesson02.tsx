@@ -5,7 +5,10 @@ import ExerciseSection from '../../components/ExerciseSection';
 import Callout from '../../components/Callout';
 import { Sec, Flow } from './_helpers';
 
-interface Props { isDone: boolean; onToggleDone: () => void; }
+interface Props {
+  isDone: boolean;
+  onToggleDone: () => void;
+}
 
 const BASIC = `// src/app.ts
 import express, { Express, Request, Response } from 'express';
@@ -82,52 +85,87 @@ export default function Lesson02({ isDone, onToggleDone }: Props) {
       onToggleDone={onToggleDone}
     >
       <Sec title="Khái niệm">
-        File <code>app.ts</code> là nơi cấu hình Express instance — đăng ký middleware, mount routes,
-        và xử lý lỗi. Tách biệt <code>app.ts</code> (cấu hình) và <code>index.ts</code> (start server)
-        là pattern chuẩn giúp dễ test: import <code>app</code> vào tests mà không cần bind port.
-        TypeScript cung cấp các named types <code>Express</code>, <code>Request</code>,
+        File <code>app.ts</code> là nơi cấu hình Express instance — đăng ký middleware, mount
+        routes, và xử lý lỗi. Tách biệt <code>app.ts</code> (cấu hình) và <code>index.ts</code>{' '}
+        (start server) là pattern chuẩn giúp dễ test: import <code>app</code> vào tests mà không cần
+        bind port. TypeScript cung cấp các named types <code>Express</code>, <code>Request</code>,
         <code>Response</code>, <code>NextFunction</code> từ <code>@types/express</code>.
       </Sec>
 
       <Sec title="Luồng hoạt động">
-        <Flow steps={[
-          'Import express và named types Express, Request, Response, NextFunction',
-          'Tạo const app: Express = express() — type rõ ràng cho app instance',
-          'Bật middleware cần thiết: express.json(), express.urlencoded()',
-          'Mount routes và global error handler',
-          'Export app (không gọi listen ở đây — để index.ts làm)',
-        ]} />
+        <Flow
+          steps={[
+            'Import express và named types Express, Request, Response, NextFunction',
+            'Tạo const app: Express = express() — type rõ ràng cho app instance',
+            'Bật middleware cần thiết: express.json(), express.urlencoded()',
+            'Mount routes và global error handler',
+            'Export app (không gọi listen ở đây — để index.ts làm)',
+          ]}
+        />
       </Sec>
 
       <Sec title="Code ví dụ">
-        <CodeTabs tabs={[
-          { label: 'Cơ bản .ts', code: BASIC },
-          { label: 'Thực tế .ts', code: REAL },
-          { label: 'So sánh JS→TS', code: JSOTS },
-        ]} />
+        <CodeTabs
+          tabs={[
+            { label: 'Cơ bản .ts', code: BASIC },
+            { label: 'Thực tế .ts', code: REAL },
+            { label: 'So sánh JS→TS', code: JSOTS },
+          ]}
+        />
       </Sec>
 
       <Sec title="Giải thích từng dòng">
-        <LineTable rows={[
-          { line: '1',  explanation: 'import { Express } — type cho app instance. Không bắt buộc nhưng giúp IDE autocomplete đầy đủ methods của Express app.' },
-          { line: '2',  explanation: 'import { Request } — type cho request object trong route handlers. Có thể dùng generic để type params, body, query.' },
-          { line: '3',  explanation: 'import { Response } — type cho response object. IDE sẽ gợi ý .json(), .status(), .send(), .redirect()...' },
-          { line: '4',  explanation: 'import { NextFunction } — type cho hàm next() trong middleware. Bắt buộc khi viết middleware có 3+ params.' },
-          { line: '12', explanation: '_res, _req — prefix underscore với unused params. TypeScript coi đây là "intentionally unused" và không báo warning.' },
-          { line: '24', explanation: 'Error handler có đúng 4 params (err, req, res, next) — Express nhận biết đây là error handler qua arity. Thiếu _next sẽ không hoạt động.' },
-          { line: '27', explanation: 'export default app — index.ts import và gọi app.listen(). Test files import app để dùng với supertest mà không start server.' },
-        ]} />
+        <LineTable
+          rows={[
+            {
+              line: '1',
+              explanation:
+                'import { Express } — type cho app instance. Không bắt buộc nhưng giúp IDE autocomplete đầy đủ methods của Express app.',
+            },
+            {
+              line: '2',
+              explanation:
+                'import { Request } — type cho request object trong route handlers. Có thể dùng generic để type params, body, query.',
+            },
+            {
+              line: '3',
+              explanation:
+                'import { Response } — type cho response object. IDE sẽ gợi ý .json(), .status(), .send(), .redirect()...',
+            },
+            {
+              line: '4',
+              explanation:
+                'import { NextFunction } — type cho hàm next() trong middleware. Bắt buộc khi viết middleware có 3+ params.',
+            },
+            {
+              line: '12',
+              explanation:
+                '_res, _req — prefix underscore với unused params. TypeScript coi đây là "intentionally unused" và không báo warning.',
+            },
+            {
+              line: '24',
+              explanation:
+                'Error handler có đúng 4 params (err, req, res, next) — Express nhận biết đây là error handler qua arity. Thiếu _next sẽ không hoạt động.',
+            },
+            {
+              line: '27',
+              explanation:
+                'export default app — index.ts import và gọi app.listen(). Test files import app để dùng với supertest mà không start server.',
+            },
+          ]}
+        />
       </Sec>
 
       <Sec title="Lỗi thường gặp">
         <Callout type="warn">
-          Gọi <code>listen</code> trong <code>app.ts</code> → khó test. Tách <code>app.ts</code> (Express
-          setup) và <code>index.ts</code> (server start) để có thể import app trong tests mà không
-          start server thực sự.
+          Gọi <code>listen</code> trong <code>app.ts</code> → khó test. Tách <code>app.ts</code>{' '}
+          (Express setup) và <code>index.ts</code> (server start) để có thể import app trong tests
+          mà không start server thực sự.
         </Callout>
         <Callout type="note">
-          <code>_req</code>, <code>_res</code> — prefix underscore với unused params tránh TypeScript
-          "unused variable" warning. Đây là convention phổ biến, không phải syntax đặc biệt của TS.
+          <code>_req</code>, <code>_res</code> — prefix underscore với unused params tránh
+          TypeScript "unused variable" warning. Đây là convention phổ biến, không phải syntax đặc
+          biệt của TS.
         </Callout>
       </Sec>
 

@@ -5,7 +5,10 @@ import ExerciseSection from '../../components/ExerciseSection';
 import Callout from '../../components/Callout';
 import { Sec, Flow } from './_helpers';
 
-interface Props { isDone: boolean; onToggleDone: () => void; }
+interface Props {
+  isDone: boolean;
+  onToggleDone: () => void;
+}
 
 const BASIC = `// src/types/express.d.ts
 import { IUser } from '../models/User';
@@ -123,52 +126,83 @@ export default function Lesson08({ isDone, onToggleDone }: Props) {
       <Sec title="Khái niệm">
         Declaration Merging là tính năng TypeScript cho phép mở rộng interface đã có từ thư viện
         khác. Express định nghĩa <code>namespace Express</code> với <code>interface Request</code> —
-        ta có thể merge thêm field <code>user</code> vào đó mà không cần fork thư viện. Kỹ thuật
-        này dùng file <code>.d.ts</code> (declaration file) để khai báo type mà không có
-        implementation. Sau khi merge, <code>req.user</code> xuất hiện ở mọi nơi trong project
-        với đúng type đã định nghĩa.
+        ta có thể merge thêm field <code>user</code> vào đó mà không cần fork thư viện. Kỹ thuật này
+        dùng file <code>.d.ts</code> (declaration file) để khai báo type mà không có implementation.
+        Sau khi merge, <code>req.user</code> xuất hiện ở mọi nơi trong project với đúng type đã định
+        nghĩa.
       </Sec>
 
       <Sec title="Luồng hoạt động">
-        <Flow steps={[
-          'Tạo file src/types/express.d.ts (không phải .ts — phải là .d.ts)',
-          'Dùng declare global { namespace Express { interface Request { ... } } }',
-          'Thêm user?: IUser vào Request interface',
-          'Import IUser trong .d.ts file — hoặc dùng type alias',
-          'TypeScript tự merge declaration — req.user xuất hiện ở mọi nơi',
-        ]} />
+        <Flow
+          steps={[
+            'Tạo file src/types/express.d.ts (không phải .ts — phải là .d.ts)',
+            'Dùng declare global { namespace Express { interface Request { ... } } }',
+            'Thêm user?: IUser vào Request interface',
+            'Import IUser trong .d.ts file — hoặc dùng type alias',
+            'TypeScript tự merge declaration — req.user xuất hiện ở mọi nơi',
+          ]}
+        />
       </Sec>
 
       <Sec title="Code ví dụ">
-        <CodeTabs tabs={[
-          { label: 'Cơ bản .ts', code: BASIC },
-          { label: 'Thực tế .ts', code: REAL },
-          { label: 'Sai lầm .ts', code: MISTAKE },
-        ]} />
+        <CodeTabs
+          tabs={[
+            { label: 'Cơ bản .ts', code: BASIC },
+            { label: 'Thực tế .ts', code: REAL },
+            { label: 'Sai lầm .ts', code: MISTAKE },
+          ]}
+        />
       </Sec>
 
       <Sec title="Giải thích từng dòng">
-        <LineTable rows={[
-          { line: '1',  explanation: 'declare global — mở rộng global scope. Cần thiết trong module files (có import/export) để declaration không bị giới hạn trong module scope.' },
-          { line: '2',  explanation: 'namespace Express — namespace mà @types/express định nghĩa. TypeScript tự ghép tất cả declarations của cùng 1 namespace từ nhiều file.' },
-          { line: '3',  explanation: 'File .d.ts — Declaration file, chỉ chứa type declarations, không có implementation code. TypeScript compiler xử lý khác với .ts thông thường.' },
-          { line: '4',  explanation: 'interface Request { user?: IUser } — thêm field vào interface có sẵn, không override. user? là optional vì request chưa qua authenticate thì undefined.' },
-          { line: '5',  explanation: 'req.user?.role — optional chaining vì req.user có thể undefined. Nếu authenticate đã chạy và set req.user, truy cập an toàn.' },
-          { line: '6',  explanation: 'process.env.JWT_SECRET! — non-null assertion operator. Báo TypeScript "tôi biết giá trị này không phải undefined". Dùng khi đã validate env ở startup.' },
-        ]} />
+        <LineTable
+          rows={[
+            {
+              line: '1',
+              explanation:
+                'declare global — mở rộng global scope. Cần thiết trong module files (có import/export) để declaration không bị giới hạn trong module scope.',
+            },
+            {
+              line: '2',
+              explanation:
+                'namespace Express — namespace mà @types/express định nghĩa. TypeScript tự ghép tất cả declarations của cùng 1 namespace từ nhiều file.',
+            },
+            {
+              line: '3',
+              explanation:
+                'File .d.ts — Declaration file, chỉ chứa type declarations, không có implementation code. TypeScript compiler xử lý khác với .ts thông thường.',
+            },
+            {
+              line: '4',
+              explanation:
+                'interface Request { user?: IUser } — thêm field vào interface có sẵn, không override. user? là optional vì request chưa qua authenticate thì undefined.',
+            },
+            {
+              line: '5',
+              explanation:
+                'req.user?.role — optional chaining vì req.user có thể undefined. Nếu authenticate đã chạy và set req.user, truy cập an toàn.',
+            },
+            {
+              line: '6',
+              explanation:
+                'process.env.JWT_SECRET! — non-null assertion operator. Báo TypeScript "tôi biết giá trị này không phải undefined". Dùng khi đã validate env ở startup.',
+            },
+          ]}
+        />
       </Sec>
 
       <Sec title="Lỗi thường gặp">
         <Callout type="warn">
-          <code>req.user</code> có type <code>IUser | undefined</code> vì là optional. Luôn kiểm
-          tra <code>if (!req.user)</code> trước khi dùng, hoặc dùng <code>req.user?.role</code>.
-          Nếu middleware <code>authenticate</code> đã chạy, có thể assert <code>req.user!</code>{' '}
-          nhưng không khuyến khích — dễ gây lỗi khi thứ tự middleware thay đổi.
+          <code>req.user</code> có type <code>IUser | undefined</code> vì là optional. Luôn kiểm tra{' '}
+          <code>if (!req.user)</code> trước khi dùng, hoặc dùng <code>req.user?.role</code>. Nếu
+          middleware <code>authenticate</code> đã chạy, có thể assert <code>req.user!</code> nhưng
+          không khuyến khích — dễ gây lỗi khi thứ tự middleware thay đổi.
         </Callout>
         <Callout type="note">
           File <code>.d.ts</code> là Declaration file — chỉ chứa type declarations, không có
           implementation. TypeScript tự merge với các declarations có sẵn của Express. Phần{' '}
-          <code>"include": ["src/**/*"]</code> trong tsconfig phải include cả <code>.d.ts</code> files.
+          <code>"include": ["src/**/*"]</code> trong tsconfig phải include cả <code>.d.ts</code>{' '}
+          files.
         </Callout>
       </Sec>
 

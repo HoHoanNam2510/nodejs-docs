@@ -5,7 +5,10 @@ import ExerciseSection from '../../components/ExerciseSection';
 import Callout from '../../components/Callout';
 import { Sec, Flow } from './_helpers';
 
-interface Props { isDone: boolean; onToggleDone: () => void; }
+interface Props {
+  isDone: boolean;
+  onToggleDone: () => void;
+}
 
 const BASIC = `import { RequestHandler } from 'express';
 
@@ -92,44 +95,66 @@ export default function Lesson06({ isDone, onToggleDone }: Props) {
     >
       <Sec title="Khái niệm">
         Middleware là function chạy giữa request và route handler, có quyền đọc/ghi
-        <code>req</code>, <code>res</code>, và gọi <code>next()</code> để chuyển sang bước tiếp theo.
-        TypeScript cung cấp type <code>RequestHandler</code> từ <code>express</code> — khai báo
-        tường minh signature <code>(req, res, next)</code> giúp IDE autocomplete đầy đủ và bắt lỗi
-        typo ngay lúc code. Middleware chain là thứ tự các middleware được đăng ký — thứ tự
+        <code>req</code>, <code>res</code>, và gọi <code>next()</code> để chuyển sang bước tiếp
+        theo. TypeScript cung cấp type <code>RequestHandler</code> từ <code>express</code> — khai
+        báo tường minh signature <code>(req, res, next)</code> giúp IDE autocomplete đầy đủ và bắt
+        lỗi typo ngay lúc code. Middleware chain là thứ tự các middleware được đăng ký — thứ tự
         <code>app.use()</code> chính là thứ tự thực thi.
       </Sec>
 
       <Sec title="Luồng hoạt động">
-        <Flow steps={[
-          'Middleware là function nhận (req, res, next) — chạy giữa request và route handler',
-          'Khai báo type RequestHandler cho middleware function',
-          'Gọi next() để chuyển sang middleware/handler tiếp theo',
-          'Gọi next(error) để nhảy thẳng đến error handler',
-          'Thứ tự app.use() = thứ tự thực thi — quan trọng!',
-        ]} />
+        <Flow
+          steps={[
+            'Middleware là function nhận (req, res, next) — chạy giữa request và route handler',
+            'Khai báo type RequestHandler cho middleware function',
+            'Gọi next() để chuyển sang middleware/handler tiếp theo',
+            'Gọi next(error) để nhảy thẳng đến error handler',
+            'Thứ tự app.use() = thứ tự thực thi — quan trọng!',
+          ]}
+        />
       </Sec>
 
       <Sec title="Code ví dụ">
-        <CodeTabs tabs={[
-          { label: 'Cơ bản .ts', code: BASIC },
-          { label: 'Thực tế .ts', code: REAL },
-          { label: 'So sánh JS→TS', code: JSOTS },
-        ]} />
+        <CodeTabs
+          tabs={[
+            { label: 'Cơ bản .ts', code: BASIC },
+            { label: 'Thực tế .ts', code: REAL },
+            { label: 'So sánh JS→TS', code: JSOTS },
+          ]}
+        />
       </Sec>
 
       <Sec title="Giải thích từng dòng">
-        <LineTable rows={[
-          { line: '1',  explanation: 'RequestHandler = (req: Request, res: Response, next: NextFunction) => void — type alias đầy đủ cho middleware function, đảm bảo đúng 3 params.' },
-          { line: '2',  explanation: 'res.on("finish", cb) — event fires sau khi response đã gửi xong. Đây là nơi đúng để tính response time vì res.statusCode đã có giá trị cuối.' },
-          { line: '3',  explanation: 'req.is("json") — kiểm tra Content-Type header có match "application/json" không. Trả về matched type string hoặc false.' },
-          { line: '4',  explanation: 'Route-level middleware array: app.get(path, mw1, mw2, handler) — middleware chỉ chạy cho route đó, không ảnh hưởng toàn app.' },
-        ]} />
+        <LineTable
+          rows={[
+            {
+              line: '1',
+              explanation:
+                'RequestHandler = (req: Request, res: Response, next: NextFunction) => void — type alias đầy đủ cho middleware function, đảm bảo đúng 3 params.',
+            },
+            {
+              line: '2',
+              explanation:
+                'res.on("finish", cb) — event fires sau khi response đã gửi xong. Đây là nơi đúng để tính response time vì res.statusCode đã có giá trị cuối.',
+            },
+            {
+              line: '3',
+              explanation:
+                'req.is("json") — kiểm tra Content-Type header có match "application/json" không. Trả về matched type string hoặc false.',
+            },
+            {
+              line: '4',
+              explanation:
+                'Route-level middleware array: app.get(path, mw1, mw2, handler) — middleware chỉ chạy cho route đó, không ảnh hưởng toàn app.',
+            },
+          ]}
+        />
       </Sec>
 
       <Sec title="Lỗi thường gặp">
         <Callout type="warn">
-          Quên gọi <code>next()</code> — request treo mãi, client timeout. Mỗi middleware phải
-          kết thúc bằng <code>next()</code> HOẶC gửi response (<code>res.json()</code>,{' '}
+          Quên gọi <code>next()</code> — request treo mãi, client timeout. Mỗi middleware phải kết
+          thúc bằng <code>next()</code> HOẶC gửi response (<code>res.json()</code>,{' '}
           <code>res.send()</code>). Không được bỏ trống cả hai.
         </Callout>
         <Callout type="note">

@@ -5,7 +5,10 @@ import ExerciseSection from '../../components/ExerciseSection';
 import Callout from '../../components/Callout';
 import { Sec, Flow } from './_helpers';
 
-interface Props { isDone: boolean; onToggleDone: () => void; }
+interface Props {
+  isDone: boolean;
+  onToggleDone: () => void;
+}
 
 const BASIC = `import express from 'express';
 const app = express();
@@ -79,50 +82,80 @@ export default function Lesson07({ isDone, onToggleDone }: Props) {
       <Sec title="Khái niệm">
         Express 4.16+ đã tích hợp sẵn các middleware phổ biến nhất. <code>express.json()</code>{' '}
         parse request body khi Content-Type là <code>application/json</code>.{' '}
-        <code>express.urlencoded()</code> parse form data từ HTML form. <code>express.static()</code>{' '}
-        serve file tĩnh (HTML, CSS, JS, images) từ một thư mục. Không cần cài thêm package{' '}
-        <code>body-parser</code> như các dự án Express cũ. Thứ tự đăng ký middleware quan trọng:
-        body parsers phải đứng trước routes.
+        <code>express.urlencoded()</code> parse form data từ HTML form.{' '}
+        <code>express.static()</code> serve file tĩnh (HTML, CSS, JS, images) từ một thư mục. Không
+        cần cài thêm package <code>body-parser</code> như các dự án Express cũ. Thứ tự đăng ký
+        middleware quan trọng: body parsers phải đứng trước routes.
       </Sec>
 
       <Sec title="Luồng hoạt động">
-        <Flow steps={[
-          'express.json() — parse body với Content-Type: application/json',
-          'express.urlencoded({ extended: true }) — parse form data',
-          'express.static("public") — serve static files từ thư mục',
-          'Thứ tự quan trọng: body parsers phải đứng trước routes',
-          'Không cần body-parser package riêng từ Express 4.16+',
-        ]} />
+        <Flow
+          steps={[
+            'express.json() — parse body với Content-Type: application/json',
+            'express.urlencoded({ extended: true }) — parse form data',
+            'express.static("public") — serve static files từ thư mục',
+            'Thứ tự quan trọng: body parsers phải đứng trước routes',
+            'Không cần body-parser package riêng từ Express 4.16+',
+          ]}
+        />
       </Sec>
 
       <Sec title="Code ví dụ">
-        <CodeTabs tabs={[
-          { label: 'Cơ bản .ts', code: BASIC },
-          { label: 'Thực tế .ts', code: REAL },
-        ]} />
+        <CodeTabs
+          tabs={[
+            { label: 'Cơ bản .ts', code: BASIC },
+            { label: 'Thực tế .ts', code: REAL },
+          ]}
+        />
       </Sec>
 
       <Sec title="Giải thích từng dòng">
-        <LineTable rows={[
-          { line: '1',  explanation: 'limit: "10mb" — reject request body vượt quá 10MB. Express trả 413 Payload Too Large tự động. Giá trị mặc định là 100kb.' },
-          { line: '2',  explanation: 'extended: true — dùng thư viện qs để parse nested objects: a[b]=1 → { a: { b: "1" } }. extended: false dùng querystring built-in, chỉ parse flat.' },
-          { line: '3',  explanation: 'path.join(__dirname, ...) — tạo đường dẫn tuyệt đối từ thư mục hiện tại. An toàn hơn path relative vì không phụ thuộc vào cwd khi chạy.' },
-          { line: '4',  explanation: 'dotfiles: "deny" — từ chối serve file bắt đầu bằng dấu chấm (.env, .htaccess). Giá trị khác: "allow", "ignore" (mặc định: trả 404 không lỗi).' },
-          { line: '5',  explanation: 'SPA fallback pattern: mọi route không phải /api trả index.html để React Router tự xử lý client-side routing.' },
-          { line: '6',  explanation: 'maxAge: "7d" — cache static files trong 7 ngày. Browser sẽ không request lại trong thời gian này. Dùng content hash trong filename để bust cache.' },
-        ]} />
+        <LineTable
+          rows={[
+            {
+              line: '1',
+              explanation:
+                'limit: "10mb" — reject request body vượt quá 10MB. Express trả 413 Payload Too Large tự động. Giá trị mặc định là 100kb.',
+            },
+            {
+              line: '2',
+              explanation:
+                'extended: true — dùng thư viện qs để parse nested objects: a[b]=1 → { a: { b: "1" } }. extended: false dùng querystring built-in, chỉ parse flat.',
+            },
+            {
+              line: '3',
+              explanation:
+                'path.join(__dirname, ...) — tạo đường dẫn tuyệt đối từ thư mục hiện tại. An toàn hơn path relative vì không phụ thuộc vào cwd khi chạy.',
+            },
+            {
+              line: '4',
+              explanation:
+                'dotfiles: "deny" — từ chối serve file bắt đầu bằng dấu chấm (.env, .htaccess). Giá trị khác: "allow", "ignore" (mặc định: trả 404 không lỗi).',
+            },
+            {
+              line: '5',
+              explanation:
+                'SPA fallback pattern: mọi route không phải /api trả index.html để React Router tự xử lý client-side routing.',
+            },
+            {
+              line: '6',
+              explanation:
+                'maxAge: "7d" — cache static files trong 7 ngày. Browser sẽ không request lại trong thời gian này. Dùng content hash trong filename để bust cache.',
+            },
+          ]}
+        />
       </Sec>
 
       <Sec title="Lỗi thường gặp">
         <Callout type="warn">
-          <code>express.static('public')</code> dùng đường dẫn relative — nguy hiểm khi chạy từ
-          thư mục khác. Luôn dùng <code>path.join(__dirname, 'public')</code> để đảm bảo đường dẫn
-          tuyệt đối, tránh lỗi "ENOENT: no such file or directory".
+          <code>express.static('public')</code> dùng đường dẫn relative — nguy hiểm khi chạy từ thư
+          mục khác. Luôn dùng <code>path.join(__dirname, 'public')</code> để đảm bảo đường dẫn tuyệt
+          đối, tránh lỗi "ENOENT: no such file or directory".
         </Callout>
         <Callout type="note">
           Từ Express 4.16+, không cần <code>body-parser</code> package riêng.{' '}
-          <code>express.json()</code> và <code>express.urlencoded()</code> là built-in. Nếu thấy code
-          cũ dùng <code>require('body-parser')</code> — đó là cách cũ, không cần thiết nữa.
+          <code>express.json()</code> và <code>express.urlencoded()</code> là built-in. Nếu thấy
+          code cũ dùng <code>require('body-parser')</code> — đó là cách cũ, không cần thiết nữa.
         </Callout>
       </Sec>
 

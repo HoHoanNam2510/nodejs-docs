@@ -212,8 +212,8 @@ export default function ProjectSection() {
       <p style={{ fontSize: 13, color: 'var(--text2)', marginBottom: '1rem', lineHeight: 1.6 }}>
         Viết Todo API hoàn chỉnh với TypeScript: interface <code className="ic">ITodo</code>,{' '}
         <code className="ic">AppError</code> hierarchy, <code className="ic">asyncHandler</code>{' '}
-        wrapper, CRUD routes với filter query, typed request generics, 404 handler và global
-        error handler — không có <code className="ic">any</code> trong toàn bộ file.
+        wrapper, CRUD routes với filter query, typed request generics, 404 handler và global error
+        handler — không có <code className="ic">any</code> trong toàn bộ file.
       </p>
 
       <CodeBlock code={PROJECT_CODE} />
@@ -228,7 +228,8 @@ export default function ProjectSection() {
         &nbsp;
         <span style={{ color: 'var(--accent)' }}>✓</span> asyncHandler cho mọi async route <br />
         &nbsp;
-        <span style={{ color: 'var(--accent)' }}>✓</span> Error hierarchy: AppError, NotFoundError, ValidationError <br />
+        <span style={{ color: 'var(--accent)' }}>✓</span> Error hierarchy: AppError, NotFoundError,
+        ValidationError <br />
         &nbsp;
         <span style={{ color: 'var(--accent)' }}>✓</span> tsc --noEmit không lỗi
       </div>

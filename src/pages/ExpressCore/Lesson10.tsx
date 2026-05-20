@@ -5,7 +5,10 @@ import ExerciseSection from '../../components/ExerciseSection';
 import Callout from '../../components/Callout';
 import { Sec, Flow } from './_helpers';
 
-interface Props { isDone: boolean; onToggleDone: () => void; }
+interface Props {
+  isDone: boolean;
+  onToggleDone: () => void;
+}
 
 const BASIC = `import express, { Request, Response, NextFunction } from 'express';
 const app = express();
@@ -87,47 +90,73 @@ export default function Lesson10({ isDone, onToggleDone }: Props) {
         Khi request không khớp với bất kỳ route nào đã đăng ký, Express tiếp tục xuống dưới trong
         middleware chain. Đặt một <code>app.use()</code> không có path ở cuối — nó sẽ catch tất cả
         requests không được xử lý. Pattern tốt nhất: thay vì trả response 404 trực tiếp, dùng{' '}
-        <code>next(new NotFoundError())</code> để error handler xử lý nhất quán — tất cả lỗi
-        đi qua 1 chỗ, dễ maintain và test.
+        <code>next(new NotFoundError())</code> để error handler xử lý nhất quán — tất cả lỗi đi qua
+        1 chỗ, dễ maintain và test.
       </Sec>
 
       <Sec title="Luồng hoạt động">
-        <Flow steps={[
-          'Đặt 404 handler sau tất cả routes nhưng trước error handler',
-          'Dùng app.use() không có path — match mọi request không đến được route nào',
-          'Trả response JSON với status 404 và message rõ ràng',
-          'Hoặc dùng next(new NotFoundError()) → để error handler xử lý nhất quán',
-          'Thứ tự cuối cùng: routes → 404 handler → error handler',
-        ]} />
+        <Flow
+          steps={[
+            'Đặt 404 handler sau tất cả routes nhưng trước error handler',
+            'Dùng app.use() không có path — match mọi request không đến được route nào',
+            'Trả response JSON với status 404 và message rõ ràng',
+            'Hoặc dùng next(new NotFoundError()) → để error handler xử lý nhất quán',
+            'Thứ tự cuối cùng: routes → 404 handler → error handler',
+          ]}
+        />
       </Sec>
 
       <Sec title="Code ví dụ">
-        <CodeTabs tabs={[
-          { label: 'Cơ bản .ts', code: BASIC },
-          { label: 'Thực tế .ts', code: REAL },
-        ]} />
+        <CodeTabs
+          tabs={[
+            { label: 'Cơ bản .ts', code: BASIC },
+            { label: 'Thực tế .ts', code: REAL },
+          ]}
+        />
       </Sec>
 
       <Sec title="Giải thích từng dòng">
-        <LineTable rows={[
-          { line: '1',  explanation: 'app.use() không có path — match tất cả HTTP methods và tất cả paths. Chỉ chạy nếu không có route nào trước đó gửi response hoặc gọi next().' },
-          { line: '2',  explanation: 'Vị trí sau routes nhưng trước error handler — 404 handler phải thấy requests không được route nào handle, nhưng lỗi của nó cần error handler xử lý.' },
-          { line: '3',  explanation: 'next(new NotFoundError()) — pass error object vào error handler thay vì trả response trực tiếp. Giúp tất cả error responses có cùng format.' },
-          { line: '4',  explanation: 'Thứ tự middleware chain đầy đủ: body parsers → global MW → routes → 404 handler → error handler. Phá vỡ thứ tự này gây bugs khó debug.' },
-          { line: '5',  explanation: '_req prefix — underscore báo TypeScript "tham số này intentionally unused". Tránh warning "declared but never read" mà không cần tắt rule.' },
-        ]} />
+        <LineTable
+          rows={[
+            {
+              line: '1',
+              explanation:
+                'app.use() không có path — match tất cả HTTP methods và tất cả paths. Chỉ chạy nếu không có route nào trước đó gửi response hoặc gọi next().',
+            },
+            {
+              line: '2',
+              explanation:
+                'Vị trí sau routes nhưng trước error handler — 404 handler phải thấy requests không được route nào handle, nhưng lỗi của nó cần error handler xử lý.',
+            },
+            {
+              line: '3',
+              explanation:
+                'next(new NotFoundError()) — pass error object vào error handler thay vì trả response trực tiếp. Giúp tất cả error responses có cùng format.',
+            },
+            {
+              line: '4',
+              explanation:
+                'Thứ tự middleware chain đầy đủ: body parsers → global MW → routes → 404 handler → error handler. Phá vỡ thứ tự này gây bugs khó debug.',
+            },
+            {
+              line: '5',
+              explanation:
+                '_req prefix — underscore báo TypeScript "tham số này intentionally unused". Tránh warning "declared but never read" mà không cần tắt rule.',
+            },
+          ]}
+        />
       </Sec>
 
       <Sec title="Lỗi thường gặp">
         <Callout type="warn">
-          404 handler đặt trước routes → TẤT CẢ requests đều trả 404, kể cả routes hợp lệ.
-          Express chạy middleware theo thứ tự từ trên xuống, không check toàn bộ app trước.
-          Luôn đặt 404 handler sau khi đã mount tất cả routes.
+          404 handler đặt trước routes → TẤT CẢ requests đều trả 404, kể cả routes hợp lệ. Express
+          chạy middleware theo thứ tự từ trên xuống, không check toàn bộ app trước. Luôn đặt 404
+          handler sau khi đã mount tất cả routes.
         </Callout>
         <Callout type="note">
-          Dùng <code>next(new NotFoundError())</code> thay <code>res.status(404).json(...)</code>{' '}
-          để tất cả lỗi đi qua 1 error handler duy nhất — nhất quán format, dễ maintain, dễ test,
-          dễ thêm logging về sau.
+          Dùng <code>next(new NotFoundError())</code> thay <code>res.status(404).json(...)</code> để
+          tất cả lỗi đi qua 1 error handler duy nhất — nhất quán format, dễ maintain, dễ test, dễ
+          thêm logging về sau.
         </Callout>
       </Sec>
 
