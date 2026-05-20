@@ -2014,17 +2014,19 @@ export default function Nav() {
 
 **Checklist**:
 
-- [ ] `src/pages/Authentication/index.tsx` — orchestrator, `useProgress('module_06', 10)`
-- [ ] `src/pages/Authentication/_helpers.tsx` + `_toc.ts`
-- [ ] Lesson01–10:
-- [ ] Bài 3: `JwtPayload` interface, `signToken`, `verifyToken` typed
-- [ ] Bài 4: `zod` schema + `z.infer` cho register/login
-- [ ] Bài 6: `authenticate` middleware với typed `req.user`
-- [ ] Bài 7: `TokenPair` interface, `generateTokenPair`
-- [ ] Bài 8: `requireRole(...roles: Array<'user' | 'admin'>)` — literal union
-- [ ] `src/pages/Authentication/ProjectSection.tsx` — Auth layer cho Blog API
+- [x] `src/pages/Authentication/index.tsx` — orchestrator, `useProgress('module_06', 10)`
+- [x] `src/pages/Authentication/_helpers.tsx` + `_toc.ts`
+- [x] Lesson01–10:
+- [x] Bài 3: `JwtPayload` interface, `signToken`, `verifyToken` typed
+- [x] Bài 4: `zod` schema + `z.infer` cho register/login
+- [x] Bài 6: `authenticate` middleware với typed `req.user`
+- [x] Bài 7: `TokenPair` interface, `generateTokenPair`
+- [x] Bài 8: `requireRole(...roles: Array<'user' | 'admin'>)` — literal union
+- [x] `src/pages/Authentication/ProjectSection.tsx` — Auth layer cho Blog API
 
 **Output**: `src/pages/Authentication/` folder (cùng cấu trúc với NenTang/)
+
+> **✅ COMPLETED** — `npx tsc --noEmit && npm run build` thành công, 0 TypeScript errors. 140 modules transformed. Xóa stub `Authentication.tsx` để folder/index.tsx resolve đúng.
 
 ---
 
