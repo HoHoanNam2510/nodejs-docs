@@ -204,13 +204,13 @@ Module 01 "Nền tảng" cần bổ sung một nhóm bài TS cơ bản **trướ
 
 ### Tech Stack — React + TypeScript + Vite
 
-| Lớp         | Công nghệ                      | Lý do                                                                           |
-| ----------- | ------------------------------ | ------------------------------------------------------------------------------- |
-| **UI**      | React 18 + TypeScript          | Component reuse — Nav, LessonCard, CodeBlock, Badge không duplicate 8 lần       |
-| **Routing** | React Router v6                | `<Link to="/01-nen-tang">` thay anchor href, active link tự động               |
-| **Build**   | Vite                           | HMR nhanh khi viết nội dung, `npm run build` ra static files deploy được        |
-| **CSS**     | `shared.css` (giữ nguyên)      | Import 1 lần trong `main.tsx`, tất cả pages dùng chung — không thay đổi CSS    |
-| **State**   | React Context + localStorage   | `useProgress` hook thay thế localStorage spaghetti rải rắc trong mỗi file HTML |
+| Lớp         | Công nghệ                    | Lý do                                                                          |
+| ----------- | ---------------------------- | ------------------------------------------------------------------------------ |
+| **UI**      | React 18 + TypeScript        | Component reuse — Nav, LessonCard, CodeBlock, Badge không duplicate 8 lần      |
+| **Routing** | React Router v6              | `<Link to="/01-nen-tang">` thay anchor href, active link tự động               |
+| **Build**   | Vite                         | HMR nhanh khi viết nội dung, `npm run build` ra static files deploy được       |
+| **CSS**     | `shared.css` (giữ nguyên)    | Import 1 lần trong `main.tsx`, tất cả pages dùng chung — không thay đổi CSS    |
+| **State**   | React Context + localStorage | `useProgress` hook thay thế localStorage spaghetti rải rắc trong mỗi file HTML |
 
 ### Cấu trúc project
 
@@ -233,15 +233,33 @@ nodejs-docs/
 │   │   ├── LineTable.tsx         ← Line-by-line explanation table
 │   │   ├── ModuleFooter.tsx      ← Prev/Next module navigation
 │   │   └── ProgressBar.tsx       ← Progress bar + text
-│   ├── pages/                    ← 8 trang nội dung
-│   │   ├── Index.tsx             ← Module 00: trang chủ & mục lục
-│   │   ├── NenTang.tsx           ← Module 01: TypeScript cơ bản & HTTP
-│   │   ├── ExpressCore.tsx       ← Module 02: Express.js Core
-│   │   ├── ExpressNangCao.tsx    ← Module 03: Express.js Nâng Cao
-│   │   ├── MongoDBCore.tsx       ← Module 04: MongoDB & Mongoose Core
-│   │   ├── MongoDBNangCao.tsx    ← Module 05: MongoDB Nâng Cao
-│   │   ├── Authentication.tsx    ← Module 06: Auth & Security
-│   │   └── ThucChien.tsx         ← Module 07: Social Blog API Thực Chiến
+│   ├── pages/                    ← 8 trang nội dung (mỗi module = 1 folder)
+│   │   ├── Index.tsx             ← Module 00: trang chủ & mục lục (single file)
+│   │   ├── NenTang/              ← Module 01: TypeScript cơ bản & HTTP ✅
+│   │   │   ├── index.tsx         ← orchestrator: PageHeader + TocBar + Lessons + Footer
+│   │   │   ├── _helpers.tsx      ← Sec, Flow — helper components nội bộ
+│   │   │   ├── _toc.ts           ← TOC_LINKS array
+│   │   │   ├── Lesson01.tsx      ← mỗi lesson 1 file (~80–130 lines)
+│   │   │   ├── Lesson02.tsx
+│   │   │   ├── ...
+│   │   │   ├── Lesson14.tsx
+│   │   │   └── ProjectSection.tsx← project cuối module
+│   │   ├── ExpressCore/          ← Module 02: Express.js Core
+│   │   │   ├── index.tsx
+│   │   │   ├── _helpers.tsx
+│   │   │   ├── _toc.ts
+│   │   │   ├── Lesson01.tsx – Lesson10.tsx
+│   │   │   └── ProjectSection.tsx
+│   │   ├── ExpressNangCao/       ← Module 03: Express.js Nâng Cao
+│   │   │   └── (cùng cấu trúc, 9 lessons)
+│   │   ├── MongoDBCore/          ← Module 04: MongoDB & Mongoose Core
+│   │   │   └── (cùng cấu trúc, 12 lessons)
+│   │   ├── MongoDBNangCao/       ← Module 05: MongoDB Nâng Cao
+│   │   │   └── (cùng cấu trúc, 8 lessons)
+│   │   ├── Authentication/       ← Module 06: Auth & Security
+│   │   │   └── (cùng cấu trúc, 10 lessons)
+│   │   └── ThucChien/            ← Module 07: Social Blog API Thực Chiến
+│   │       └── (cùng cấu trúc, 8 bước)
 │   ├── hooks/
 │   │   ├── useProgress.ts        ← localStorage progress per module
 │   │   ├── useChecklist.ts       ← localStorage knowledge checklist (trang 00)
@@ -257,15 +275,29 @@ nodejs-docs/
 └── package.json
 ```
 
+### Quy ước Folder-Per-Page (áp dụng từ Module 01 trở đi)
+
+Mỗi module nội dung (01–07) là **1 folder** trong `src/pages/`, không phải 1 file đơn. Vite tự resolve `import from '../pages/NenTang'` → `NenTang/index.tsx`, nên `App.tsx` không cần thay đổi.
+
+| File                 | Vai trò                                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------------------- |
+| `index.tsx`          | Orchestrator: mount `PageHeader`, `TocBar`, tất cả `LessonXX`, `ProjectSection`, `ModuleFooter` |
+| `_helpers.tsx`       | `Sec` + `Flow` components — dùng nội bộ trong folder, không export ra ngoài                     |
+| `_toc.ts`            | `TOC_LINKS` array — danh sách anchor links cho `TocBar`                                         |
+| `LessonXX.tsx`       | 1 file = 1 bài (80–130 lines). Props: `{ isDone: boolean; onToggleDone: () => void }`           |
+| `ProjectSection.tsx` | Phần project cuối module, không nhận props                                                      |
+
+**Lý do split**: File đơn ~2500+ lines khó đọc, khó edit, khó review. Mỗi `LessonXX.tsx` độc lập — có thể sửa 1 bài mà không ảnh hưởng bài khác.
+
 ### Lý do chuyển từ HTML sang React
 
-| Vấn đề với HTML thuần           | Giải pháp React                                       |
-| ------------------------------- | ----------------------------------------------------- |
-| Nav duplicate 8 lần             | `<Nav />` component — sửa 1 chỗ, cập nhật khắp nơi  |
-| LessonCard structure lặp lại    | `<LessonCard>` với props typed                        |
-| localStorage logic rải rắc      | `useProgress(moduleId)` hook tái sử dụng              |
-| Code tab switch inline JS       | `<CodeTabs>` component với React state                |
-| Active nav link hardcode        | React Router `<NavLink>` tự detect active route       |
+| Vấn đề với HTML thuần        | Giải pháp React                                    |
+| ---------------------------- | -------------------------------------------------- |
+| Nav duplicate 8 lần          | `<Nav />` component — sửa 1 chỗ, cập nhật khắp nơi |
+| LessonCard structure lặp lại | `<LessonCard>` với props typed                     |
+| localStorage logic rải rắc   | `useProgress(moduleId)` hook tái sử dụng           |
+| Code tab switch inline JS    | `<CodeTabs>` component với React state             |
+| Active nav link hardcode     | React Router `<NavLink>` tự detect active route    |
 
 ### Dev workflow
 
@@ -706,11 +738,7 @@ Express.js + MongoDB · TypeScript Edition · Module X/7
    import multer, { FileFilterCallback } from 'multer';
    import { Request } from 'express';
 
-   const fileFilter = (
-     req: Request,
-     file: Express.Multer.File,
-     cb: FileFilterCallback
-   ) => {
+   const fileFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
      file.mimetype.startsWith('image/') ? cb(null, true) : cb(null, false);
    };
    ```
@@ -749,9 +777,7 @@ Express.js + MongoDB · TypeScript Edition · Module X/7
 
    // Helper
    export const sendSuccess = <T>(res: Response, data: T, statusCode = 200) =>
-     res
-       .status(statusCode)
-       .json({ success: true, data } satisfies ApiResponse<T>);
+     res.status(statusCode).json({ success: true, data } satisfies ApiResponse<T>);
    ```
 
 **Project cuối module**: Refactor Todo API → cấu trúc chuẩn + `zod` validation + `AppError` + `asyncHandler`.
@@ -1021,9 +1047,7 @@ Express.js + MongoDB · TypeScript Edition · Module X/7
      exp?: number;
    }
 
-   export const signToken = (
-     payload: Omit<JwtPayload, 'iat' | 'exp'>
-   ): string =>
+   export const signToken = (payload: Omit<JwtPayload, 'iat' | 'exp'>): string =>
      jwt.sign(payload, config.jwtSecret as Secret, { expiresIn: '15m' });
 
    export const verifyToken = (token: string): JwtPayload =>
@@ -1047,19 +1071,17 @@ Express.js + MongoDB · TypeScript Edition · Module X/7
 
    ```typescript
    // express.d.ts đã khai báo req.user?: IUser
-   export const authenticate: RequestHandler = asyncHandler(
-     async (req, res, next) => {
-       const token = req.headers.authorization?.split(' ')[1];
-       if (!token) throw new AppError('Chưa đăng nhập', 401);
+   export const authenticate: RequestHandler = asyncHandler(async (req, res, next) => {
+     const token = req.headers.authorization?.split(' ')[1];
+     if (!token) throw new AppError('Chưa đăng nhập', 401);
 
-       const payload = verifyToken(token);
-       const user = await User.findById(payload.userId);
-       if (!user) throw new AppError('User không tồn tại', 401);
+     const payload = verifyToken(token);
+     const user = await User.findById(payload.userId);
+     if (!user) throw new AppError('User không tồn tại', 401);
 
-       req.user = user; // TypeScript OK vì đã extend Request
-       next();
-     }
-   );
+     req.user = user; // TypeScript OK vì đã extend Request
+     next();
+   });
    ```
 
 7. **Refresh token pattern**
@@ -1070,10 +1092,7 @@ Express.js + MongoDB · TypeScript Edition · Module X/7
      refreshToken: string; // 7 ngày
    }
 
-   export const generateTokenPair = (
-     userId: string,
-     role: string
-   ): TokenPair => ({
+   export const generateTokenPair = (userId: string, role: string): TokenPair => ({
      accessToken: signToken({ userId, role }, '15m'),
      refreshToken: signToken({ userId, role }, '7d'),
    });
@@ -1607,15 +1626,15 @@ UI logic của trang web dùng React + TypeScript (không liên quan đến TS c
 
 ```typescript
 export interface Module {
-  id: string;           // 'module_01'
+  id: string; // 'module_01'
   name: string;
-  href: string;         // '/01-nen-tang'
+  href: string; // '/01-nen-tang'
   total: number;
   priority: 'HIGH' | 'MEDIUM' | 'LOW' | 'overview';
 }
 
 export interface Lesson {
-  id: string;           // 'lesson_01_01'
+  id: string; // 'lesson_01_01'
   title: string;
   priority: 'HIGH' | 'MEDIUM' | 'LOW';
 }
@@ -1636,16 +1655,19 @@ export function useProgress(moduleId: string, total: number) {
     return new Set<string>(saved[moduleId] || []);
   });
 
-  const toggle = useCallback((lessonId: string) => {
-    setDone(prev => {
-      const next = new Set(prev);
-      next.has(lessonId) ? next.delete(lessonId) : next.add(lessonId);
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-      saved[moduleId] = [...next];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
-      return next;
-    });
-  }, [moduleId]);
+  const toggle = useCallback(
+    (lessonId: string) => {
+      setDone(prev => {
+        const next = new Set(prev);
+        next.has(lessonId) ? next.delete(lessonId) : next.add(lessonId);
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        saved[moduleId] = [...next];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+        return next;
+      });
+    },
+    [moduleId]
+  );
 
   const pct = total > 0 ? Math.round((done.size / total) * 100) : 0;
   return { done, toggle, count: done.size, pct };
@@ -1847,125 +1869,137 @@ export default function Nav() {
 
 ### Phase 1 — Nền tảng (1 session)
 
-**Task**: Tạo `src/pages/NenTang.tsx`
+**Task**: Tạo `src/pages/NenTang/` folder với 14 lessons
 
 **Checklist**:
 
-- [ ] 14 lessons (6 TS basics + 8 JS/HTTP), dùng `<LessonCard>` component
-- [ ] Nhóm A: TS types, interfaces, union, generics, tsconfig, tooling
-- [ ] Nhóm B: HTTP, async/await typed, ESM, custom errors
-- [ ] `<CodeTabs>` với tab "So sánh JS→TS" cho bài 2, 3, 4, 12, 13
-- [ ] `useProgress('module_01', 14)` hook
-- [ ] Project cuối: `api-client.ts` với typed functions
+- [x] `src/pages/NenTang/index.tsx` — orchestrator, `useProgress('module_01', 14)`
+- [x] `src/pages/NenTang/_helpers.tsx` — `Sec`, `Flow` components
+- [x] `src/pages/NenTang/_toc.ts` — 14 TOC_LINKS
+- [x] Nhóm A (Lesson01–06): TS types, interfaces, union, generics, tsconfig, tooling
+- [x] Nhóm B (Lesson07–14): HTTP, async/await typed, ESM, custom errors
+- [x] `<CodeTabs>` với tab "So sánh JS→TS" cho bài 2, 3, 4, 12, 13
+- [x] `src/pages/NenTang/ProjectSection.tsx` — `api-client.ts` với typed functions
 
-**Output**: `src/pages/NenTang.tsx`
+**Output**: `src/pages/NenTang/` folder (index.tsx + \_helpers.tsx + \_toc.ts + Lesson01–14.tsx + ProjectSection.tsx)
+
+> **✅ COMPLETED** — `npx tsc --noEmit && npm run build` thành công, 0 TypeScript errors. 75 modules transformed.
 
 ---
 
 ### Phase 2 — Express Core (1 session)
 
-**Task**: Tạo `src/pages/ExpressCore.tsx`
+**Task**: Tạo `src/pages/ExpressCore/` folder với 10 lessons
 
 **Checklist**:
 
-- [ ] 10 lessons, tất cả code TS
+- [ ] `src/pages/ExpressCore/index.tsx` — orchestrator, `useProgress('module_02', 10)`
+- [ ] `src/pages/ExpressCore/_helpers.tsx` — `Sec`, `Flow`
+- [ ] `src/pages/ExpressCore/_toc.ts` — 10 TOC_LINKS
+- [ ] Lesson01–10: tất cả code TS
 - [ ] Bài 8: Declaration Merging cho `req.user`
 - [ ] Tab "Sai lầm": bài 4, 5, 8, 9
 - [ ] Tab "So sánh JS→TS": bài 2, 3, 5, 6, 9
-- [ ] `useProgress('module_02', 10)` hook
-- [ ] Project cuối: Todo API TypeScript
+- [ ] `src/pages/ExpressCore/ProjectSection.tsx` — Todo API TypeScript
 
-**Output**: `src/pages/ExpressCore.tsx`
+**Output**: `src/pages/ExpressCore/` folder (cùng cấu trúc với NenTang/)
 
 ---
 
 ### Phase 3 — Express Nâng Cao (1 session)
 
-**Task**: Tạo `src/pages/ExpressNangCao.tsx`
+**Task**: Tạo `src/pages/ExpressNangCao/` folder với 9 lessons
 
 **Checklist**:
 
-- [ ] 9 lessons, dùng `zod` thay `express-validator`
+- [ ] `src/pages/ExpressNangCao/index.tsx` — orchestrator, `useProgress('module_03', 9)`
+- [ ] `src/pages/ExpressNangCao/_helpers.tsx` + `_toc.ts`
+- [ ] Lesson01–09: dùng `zod` thay `express-validator`
 - [ ] Bài 4: `z.infer<typeof Schema>` — auto-generate type
 - [ ] Bài 8: `AppError` class + `asyncHandler` wrapper
 - [ ] Bài 9: `ApiResponse<T>` generic interface
-- [ ] `useProgress('module_03', 9)` hook
-- [ ] Project cuối: Refactor Todo API
+- [ ] `src/pages/ExpressNangCao/ProjectSection.tsx` — Refactor Todo API
 
-**Output**: `src/pages/ExpressNangCao.tsx`
+**Output**: `src/pages/ExpressNangCao/` folder (cùng cấu trúc với NenTang/)
 
 ---
 
 ### Phase 4 — MongoDB Core (1 session)
 
-**Task**: Tạo `src/pages/MongoDBCore.tsx`
+**Task**: Tạo `src/pages/MongoDBCore/` folder với 12 lessons
 
 **Checklist**:
 
-- [ ] 12 lessons, Mongoose generics xuyên suốt
+- [ ] `src/pages/MongoDBCore/index.tsx` — orchestrator, `useProgress('module_04', 12)`
+- [ ] `src/pages/MongoDBCore/_helpers.tsx` + `_toc.ts`
+- [ ] Lesson01–12: Mongoose generics xuyên suốt
 - [ ] Bài 3: Interface + Schema generic + Model typed
 - [ ] Bài 5: Static methods với `IUserModel extends Model<IUser>`
 - [ ] Bài 7: Handling `IUser | null` — TypeScript null safety
 - [ ] Bài 11: Generic `paginate<T>()` function
 - [ ] Bài 12: `populate<{ author: IUser }>()` pattern
-- [ ] `useProgress('module_04', 12)` hook
-- [ ] Project cuối: Blog API skeleton typed
+- [ ] `src/pages/MongoDBCore/ProjectSection.tsx` — Blog API skeleton typed
 
-**Output**: `src/pages/MongoDBCore.tsx`
+**Output**: `src/pages/MongoDBCore/` folder (cùng cấu trúc với NenTang/)
 
 ---
 
 ### Phase 5 — MongoDB Nâng Cao (1 session)
 
-**Task**: Tạo `src/pages/MongoDBNangCao.tsx`
+**Task**: Tạo `src/pages/MongoDBNangCao/` folder với 8 lessons
 
 **Checklist**:
 
-- [ ] 8 lessons
+- [ ] `src/pages/MongoDBNangCao/index.tsx` — orchestrator, `useProgress('module_05', 8)`
+- [ ] `src/pages/MongoDBNangCao/_helpers.tsx` + `_toc.ts`
+- [ ] Lesson01–08:
 - [ ] Bài 2: `PipelineStage[]` type
 - [ ] Bài 4: `Post.aggregate<AuthorStats>()` — generic aggregation
 - [ ] Bài 6: `this: IUser & Document` trong hooks
 - [ ] Bài 7: 3-generic Schema pattern cho methods
 - [ ] Bài 8: `ClientSession` type
-- [ ] `useProgress('module_05', 8)` hook
+- [ ] `src/pages/MongoDBNangCao/ProjectSection.tsx`
 
-**Output**: `src/pages/MongoDBNangCao.tsx`
+**Output**: `src/pages/MongoDBNangCao/` folder (cùng cấu trúc với NenTang/)
 
 ---
 
 ### Phase 6 — Authentication (1 session)
 
-**Task**: Tạo `src/pages/Authentication.tsx`
+**Task**: Tạo `src/pages/Authentication/` folder với 10 lessons
 
 **Checklist**:
 
-- [ ] 10 lessons
+- [ ] `src/pages/Authentication/index.tsx` — orchestrator, `useProgress('module_06', 10)`
+- [ ] `src/pages/Authentication/_helpers.tsx` + `_toc.ts`
+- [ ] Lesson01–10:
 - [ ] Bài 3: `JwtPayload` interface, `signToken`, `verifyToken` typed
 - [ ] Bài 4: `zod` schema + `z.infer` cho register/login
 - [ ] Bài 6: `authenticate` middleware với typed `req.user`
 - [ ] Bài 7: `TokenPair` interface, `generateTokenPair`
 - [ ] Bài 8: `requireRole(...roles: Array<'user' | 'admin'>)` — literal union
-- [ ] `useProgress('module_06', 10)` hook
-- [ ] Project cuối: Auth layer cho Blog API
+- [ ] `src/pages/Authentication/ProjectSection.tsx` — Auth layer cho Blog API
 
-**Output**: `src/pages/Authentication.tsx`
+**Output**: `src/pages/Authentication/` folder (cùng cấu trúc với NenTang/)
 
 ---
 
 ### Phase 7 — Project Thực Chiến (1 session)
 
-**Task**: Tạo `src/pages/ThucChien.tsx`
+**Task**: Tạo `src/pages/ThucChien/` folder với 8 bước
 
 **Checklist**:
 
-- [ ] 8 bước build Social Blog API
+- [ ] `src/pages/ThucChien/index.tsx` — orchestrator, `useProgress('module_07', 8)`
+- [ ] `src/pages/ThucChien/_helpers.tsx` + `_toc.ts`
+- [ ] Lesson01–08 (8 bước build Social Blog API):
 - [ ] Bước 1: `tsconfig.json` strict + project structure
 - [ ] Bước 2: Tất cả interfaces trước khi viết code
 - [ ] Bước 7: Pattern nhất quán — `asyncHandler` + `AppError` + `sendSuccess<T>`
 - [ ] Bước 8: Pre-deploy checklist TypeScript (7 items)
-- [ ] `useProgress('module_07', 8)` hook
+- [ ] `src/pages/ThucChien/ProjectSection.tsx`
 
-**Output**: `src/pages/ThucChien.tsx`
+**Output**: `src/pages/ThucChien/` folder (cùng cấu trúc với NenTang/)
 
 ---
 

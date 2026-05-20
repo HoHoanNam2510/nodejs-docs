@@ -1,0 +1,16 @@
+export const TOC_LINKS = [
+  { href: 'lesson-01-01', label: '① TS là gì' },
+  { href: 'lesson-01-02', label: '② Primitive types' },
+  { href: 'lesson-01-03', label: '③ Interfaces' },
+  { href: 'lesson-01-04', label: '④ Union types' },
+  { href: 'lesson-01-05', label: '⑤ Generics' },
+  { href: 'lesson-01-06', label: '⑥ tsconfig' },
+  { href: 'lesson-01-07', label: '⑦ HTTP Cycle' },
+  { href: 'lesson-01-08', label: '⑧ HTTP Methods' },
+  { href: 'lesson-01-09', label: '⑨ URL & JSON' },
+  { href: 'lesson-01-10', label: '⑩ Callback' },
+  { href: 'lesson-01-11', label: '⑪ Promise' },
+  { href: 'lesson-01-12', label: '⑫ Async/Await' },
+  { href: 'lesson-01-13', label: '⑬ ESM modules' },
+  { href: 'lesson-01-14', label: '⑭ Error handling' },
+];
