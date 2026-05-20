@@ -15,7 +15,13 @@ interface Props {
 export default function TocBar({ count, total, pct, links }: Props) {
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (!el) return;
+    const navH =
+      parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 56;
+    const tocBar = document.querySelector<HTMLElement>('.toc-bar');
+    const tocH = tocBar ? tocBar.offsetHeight : 0;
+    const top = el.getBoundingClientRect().top + window.scrollY - navH - tocH - 16;
+    window.scrollTo({ top, behavior: 'smooth' });
   };
 
   return (

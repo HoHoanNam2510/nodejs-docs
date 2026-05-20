@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { highlight } from '../utils/highlight';
 
 interface Props {
   code: string;
@@ -17,12 +18,14 @@ export default function CodeBlock({ code, html, standalone }: Props) {
     });
   };
 
+  const displayHtml = html ? code : highlight(code);
+
   return (
     <div className={standalone ? 'pre-wrap-standalone' : 'pre-wrap'}>
       <button className={`copy-btn${copied ? ' copied' : ''}`} onClick={handleCopy}>
         {copied ? 'copied!' : 'copy'}
       </button>
-      {html ? <pre dangerouslySetInnerHTML={{ __html: code }} /> : <pre>{code}</pre>}
+      <pre dangerouslySetInnerHTML={{ __html: displayHtml }} />
     </div>
   );
 }
