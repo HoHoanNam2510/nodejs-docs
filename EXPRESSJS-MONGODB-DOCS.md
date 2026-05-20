@@ -1992,17 +1992,19 @@ export default function Nav() {
 
 **Checklist**:
 
-- [ ] `src/pages/MongoDBNangCao/index.tsx` — orchestrator, `useProgress('module_05', 8)`
-- [ ] `src/pages/MongoDBNangCao/_helpers.tsx` + `_toc.ts`
-- [ ] Lesson01–08:
-- [ ] Bài 2: `PipelineStage[]` type
-- [ ] Bài 4: `Post.aggregate<AuthorStats>()` — generic aggregation
-- [ ] Bài 6: `this: IUser & Document` trong hooks
-- [ ] Bài 7: 3-generic Schema pattern cho methods
-- [ ] Bài 8: `ClientSession` type
-- [ ] `src/pages/MongoDBNangCao/ProjectSection.tsx`
+- [x] `src/pages/MongoDBNangCao/index.tsx` — orchestrator, `useProgress('module_05', 8)`
+- [x] `src/pages/MongoDBNangCao/_helpers.tsx` + `_toc.ts`
+- [x] Lesson01–08:
+- [x] Bài 2: `PipelineStage[]` type
+- [x] Bài 4: `Post.aggregate<AuthorStats>()` — generic aggregation
+- [x] Bài 6: `this: IUser & Document` trong hooks
+- [x] Bài 7: 3-generic Schema pattern cho methods
+- [x] Bài 8: `ClientSession` type
+- [x] `src/pages/MongoDBNangCao/ProjectSection.tsx`
 
 **Output**: `src/pages/MongoDBNangCao/` folder (cùng cấu trúc với NenTang/)
+
+> **✅ COMPLETED** — `npx tsc --noEmit && npm run build` thành công, 0 TypeScript errors. 127 modules transformed. Xóa stub `MongoDBNangCao.tsx` để folder/index.tsx resolve đúng.
 
 ---
 
