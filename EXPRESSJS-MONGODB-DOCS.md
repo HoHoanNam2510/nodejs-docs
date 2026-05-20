@@ -73,56 +73,56 @@ Module 01 "Nền tảng" cần bổ sung một nhóm bài TS cơ bản **trướ
 
 #### Nền tảng JavaScript/TypeScript (prerequisite)
 
-- [ ] Callback, Promise, async/await — 3 cách xử lý bất đồng bộ
-- [ ] try/catch/finally — xử lý lỗi
-- [ ] Destructuring, spread operator, optional chaining
-- [ ] Module system: `import`/`export` (ESM — chuẩn dùng với TS)
-- [ ] Arrow functions, closure, `this` context
-- [ ] **TypeScript: Primitive types** — `string`, `number`, `boolean`, `null`, `undefined`, `void`
-- [ ] **TypeScript: Object types & Interfaces** — định nghĩa shape của object
-- [ ] **TypeScript: Type aliases & Union types** — `type`, `|`, `&`
-- [ ] **TypeScript: Generics cơ bản** — `Array<T>`, `Promise<T>`, đủ để đọc Express types
-- [ ] **TypeScript: `tsconfig.json`** — `strict`, `target`, `module`, `outDir`, `rootDir`
-- [ ] **TypeScript: Compile & run** — `tsc`, `ts-node`, `tsx` (dev), build scripts
+- [x] Callback, Promise, async/await — 3 cách xử lý bất đồng bộ
+- [x] try/catch/finally — xử lý lỗi
+- [x] Destructuring, spread operator, optional chaining
+- [x] Module system: `import`/`export` (ESM — chuẩn dùng với TS)
+- [x] Arrow functions, closure, `this` context
+- [x] **TypeScript: Primitive types** — `string`, `number`, `boolean`, `null`, `undefined`, `void`
+- [x] **TypeScript: Object types & Interfaces** — định nghĩa shape của object
+- [x] **TypeScript: Type aliases & Union types** — `type`, `|`, `&`
+- [x] **TypeScript: Generics cơ bản** — `Array<T>`, `Promise<T>`, đủ để đọc Express types
+- [x] **TypeScript: `tsconfig.json`** — `strict`, `target`, `module`, `outDir`, `rootDir`
+- [x] **TypeScript: Compile & run** — `tsc`, `ts-node`, `tsx` (dev), build scripts
 
 #### HTTP & API cơ bản
 
-- [ ] HTTP protocol: request/response cycle
-- [ ] HTTP methods: GET, POST, PUT, PATCH, DELETE
-- [ ] HTTP status codes: 2xx, 4xx, 5xx và ý nghĩa
-- [ ] Headers: Content-Type, Authorization, CORS headers
-- [ ] REST API design principles: resource naming, URL structure
+- [x] HTTP protocol: request/response cycle
+- [x] HTTP methods: GET, POST, PUT, PATCH, DELETE
+- [x] HTTP status codes: 2xx, 4xx, 5xx và ý nghĩa
+- [x] Headers: Content-Type, Authorization, CORS headers
+- [x] REST API design principles: resource naming, URL structure
 
 #### Express.js Core (TypeScript)
 
-- [ ] Cài đặt: `express`, `@types/express`, `typescript`, `ts-node`
-- [ ] Khởi tạo app với types: `Express`, `Request`, `Response`, `NextFunction`
-- [ ] Routing: `app.get/post/put/delete` với typed request/response
-- [ ] Route parameters — `req.params` với type assertion
-- [ ] Query string — `req.query` và cách type đúng
-- [ ] Request body — `req.body` với interface định nghĩa shape
-- [ ] Middleware với TypeScript: `RequestHandler` type
-- [ ] Error handling middleware: `ErrorRequestHandler` type — 4 tham số
-- [ ] Express Router: `Router` type, tách routes ra file riêng
-- [ ] Mở rộng `Request` interface: thêm `req.user` bằng Declaration Merging
+- [x] Cài đặt: `express`, `@types/express`, `typescript`, `ts-node`
+- [x] Khởi tạo app với types: `Express`, `Request`, `Response`, `NextFunction`
+- [x] Routing: `app.get/post/put/delete` với typed request/response
+- [x] Route parameters — `req.params` với type assertion
+- [x] Query string — `req.query` và cách type đúng
+- [x] Request body — `req.body` với interface định nghĩa shape
+- [x] Middleware với TypeScript: `RequestHandler` type
+- [x] Error handling middleware: `ErrorRequestHandler` type — 4 tham số
+- [x] Express Router: `Router` type, tách routes ra file riêng
+- [x] Mở rộng `Request` interface: thêm `req.user` bằng Declaration Merging
 
 #### MongoDB & Mongoose Core (TypeScript)
 
-- [ ] Mongoose với TypeScript: Schema generics `Schema<IUser>`
-- [ ] Interface cho Document: `IUser`, `IPost` — định nghĩa shape
-- [ ] Model typing: `Model<IUser>`, return type của các queries
-- [ ] CRUD với typed results: `findById` trả `IUser | null`
-- [ ] Query operators với TypeScript — `FilterQuery<T>`
-- [ ] Sort, limit, skip — pagination đúng cách
-- [ ] Populate với TypeScript: `PopulatedDoc`, nested types
-- [ ] Timestamps: `createdAt`, `updatedAt` — thêm vào interface
+- [x] Mongoose với TypeScript: Schema generics `Schema<IUser>`
+- [x] Interface cho Document: `IUser`, `IPost` — định nghĩa shape
+- [x] Model typing: `Model<IUser>`, return type của các queries
+- [x] CRUD với typed results: `findById` trả `IUser | null`
+- [x] Query operators với TypeScript — `FilterQuery<T>`
+- [x] Sort, limit, skip — pagination đúng cách
+- [x] Populate với TypeScript: `PopulatedDoc`, nested types
+- [x] Timestamps: `createdAt`, `updatedAt` — thêm vào interface
 
 #### Authentication cơ bản (TypeScript)
 
-- [ ] bcrypt với `@types/bcryptjs`
-- [ ] JWT với `jsonwebtoken` — type-safe payload interface
-- [ ] Auth middleware: extend `Request` để có `req.user: IUser`
-- [ ] `httpOnly` cookie vs `Authorization` header — trade-offs
+- [x] bcrypt với `@types/bcryptjs`
+- [x] JWT với `jsonwebtoken` — type-safe payload interface
+- [x] Auth middleware: extend `Request` để có `req.user: IUser`
+- [x] `httpOnly` cookie vs `Authorization` header — trade-offs
 
 ---
 
@@ -130,40 +130,40 @@ Module 01 "Nền tảng" cần bổ sung một nhóm bài TS cơ bản **trướ
 
 #### Express.js nâng cao (TypeScript)
 
-- [ ] Input validation với `express-validator` + TypeScript
-- [ ] File upload với `multer` + `@types/multer` — `req.file` typing
-- [ ] CORS configuration với `cors` + `@types/cors`
-- [ ] Rate limiting với `express-rate-limit`
-- [ ] Helmet — `helmet()` không cần `@types` (bundled)
-- [ ] Cấu trúc thư mục project chuẩn với TS: `src/controllers`, `src/services`, `src/routes`, `src/models`, `src/middleware`, `src/config`, `src/types`
-- [ ] Environment variables: `dotenv` + type-safe config object
-- [ ] Custom error class: `class AppError extends Error`
-- [ ] `zod` hoặc `class-validator` — runtime validation + type inference
+- [x] Input validation với `express-validator` + TypeScript
+- [x] File upload với `multer` + `@types/multer` — `req.file` typing
+- [x] CORS configuration với `cors` + `@types/cors`
+- [x] Rate limiting với `express-rate-limit`
+- [x] Helmet — `helmet()` không cần `@types` (bundled)
+- [x] Cấu trúc thư mục project chuẩn với TS: `src/controllers`, `src/services`, `src/routes`, `src/models`, `src/middleware`, `src/config`, `src/types`
+- [x] Environment variables: `dotenv` + type-safe config object
+- [x] Custom error class: `class AppError extends Error`
+- [x] `zod` hoặc `class-validator` — runtime validation + type inference
 
 #### MongoDB nâng cao (TypeScript)
 
-- [ ] Indexes với Mongoose TypeScript
-- [ ] Aggregation Pipeline: `PipelineStage[]` type
-- [ ] Transactions với TypeScript: `ClientSession` type
-- [ ] Schema design patterns: embedded vs reference — type implications
-- [ ] Mongoose pre/post hooks với TS: `this` type trong hooks
-- [ ] Mongoose virtuals và methods — cách type đúng
+- [x] Indexes với Mongoose TypeScript
+- [x] Aggregation Pipeline: `PipelineStage[]` type
+- [x] Transactions với TypeScript: `ClientSession` type
+- [x] Schema design patterns: embedded vs reference — type implications
+- [x] Mongoose pre/post hooks với TS: `this` type trong hooks
+- [x] Mongoose virtuals và methods — cách type đúng
 
 #### Security
 
-- [ ] Refresh token + access token flow — typed payload
-- [ ] RBAC: `role` field trong User interface, middleware `requireRole()`
-- [ ] Input sanitization: `express-mongo-sanitize`
-- [ ] Không lộ stack trace — `NODE_ENV` check
+- [x] Refresh token + access token flow — typed payload
+- [x] RBAC: `role` field trong User interface, middleware `requireRole()`
+- [x] Input sanitization: `express-mongo-sanitize`
+- [x] Không lộ stack trace — `NODE_ENV` check
 
 #### Code quality (TypeScript-specific)
 
-- [ ] Naming conventions: interfaces `I` prefix (hoặc không — chọn 1 convention và giữ nhất quán)
-- [ ] `type` vs `interface` — khi nào dùng cái nào
-- [ ] Strict mode: tại sao bật `strict: true` và xử lý các lỗi phổ biến
-- [ ] Generic utility types: `Partial<T>`, `Pick<T>`, `Omit<T>`, `Required<T>`
-- [ ] Async error handling: wrapper function `asyncHandler`
-- [ ] Response format chuẩn: `ApiResponse<T>` generic interface
+- [x] Naming conventions: interfaces `I` prefix (hoặc không — chọn 1 convention và giữ nhất quán)
+- [x] `type` vs `interface` — khi nào dùng cái nào
+- [x] Strict mode: tại sao bật `strict: true` và xử lý các lỗi phổ biến
+- [x] Generic utility types: `Partial<T>`, `Pick<T>`, `Omit<T>`, `Required<T>`
+- [x] Async error handling: wrapper function `asyncHandler`
+- [x] Response format chuẩn: `ApiResponse<T>` generic interface
 
 ---
 
@@ -171,32 +171,32 @@ Module 01 "Nền tảng" cần bổ sung một nhóm bài TS cơ bản **trướ
 
 #### Testing (TypeScript)
 
-- [ ] Jest với TypeScript: `@types/jest`, `ts-jest`
-- [ ] Integration test với Supertest: `@types/supertest`
-- [ ] Typed mocks: `jest.mocked()`, mock Mongoose models
-- [ ] Test coverage với `--coverage`
+- [x] Jest với TypeScript: `@types/jest`, `ts-jest`
+- [x] Integration test với Supertest: `@types/supertest`
+- [x] Typed mocks: `jest.mocked()`, mock Mongoose models
+- [x] Test coverage với `--coverage`
 
 #### DevOps cơ bản
 
-- [ ] Docker: Dockerfile với multi-stage build (compile TS → chạy JS)
-- [ ] CI/CD với GitHub Actions — bước `tsc --noEmit` để type-check
-- [ ] Deploy lên Railway / Render: cấu hình build command `tsc`
-- [ ] Environment management: dev/staging/production
+- [x] Docker: Dockerfile với multi-stage build (compile TS → chạy JS)
+- [x] CI/CD với GitHub Actions — bước `tsc --noEmit` để type-check
+- [x] Deploy lên Railway / Render: cấu hình build command `tsc`
+- [x] Environment management: dev/staging/production
 
 #### Performance & Scale
 
-- [ ] Caching với Redis: `ioredis` (có TypeScript support tốt hơn `redis` package)
-- [ ] Logging với Winston + `winston-transport` types
-- [ ] Swagger/OpenAPI: `swagger-ui-express` + `tsoa` (tự generate từ TS decorators)
-- [ ] API versioning (`/api/v1/...`)
+- [x] Caching với Redis: `ioredis` (có TypeScript support tốt hơn `redis` package)
+- [x] Logging với Winston + `winston-transport` types
+- [x] Swagger/OpenAPI: `swagger-ui-express` + `tsoa` (tự generate từ TS decorators)
+- [x] API versioning (`/api/v1/...`)
 
 #### New tech stack liên quan
 
-- [ ] Prisma ORM — TypeScript-first ORM, alternative cho Mongoose với SQL
-- [ ] NestJS — framework TypeScript-first, kiến trúc enterprise
-- [ ] Fastify với TypeScript — nhanh hơn Express, TS support tốt hơn
-- [ ] tRPC — type-safe API không cần REST (full-stack TS)
-- [ ] GraphQL với TypeScript: `type-graphql` hoặc `pothos`
+- [x] Prisma ORM — TypeScript-first ORM, alternative cho Mongoose với SQL
+- [x] NestJS — framework TypeScript-first, kiến trúc enterprise
+- [x] Fastify với TypeScript — nhanh hơn Express, TS support tốt hơn
+- [x] tRPC — type-safe API không cần REST (full-stack TS)
+- [x] GraphQL với TypeScript: `type-graphql` hoặc `pothos`
 
 ---
 
@@ -1175,13 +1175,13 @@ Express.js + MongoDB · TypeScript Edition · Module X/7
    ```
 
 8. **Pre-deploy checklist TypeScript**
-   - [ ] `tsc --noEmit` không có lỗi
-   - [ ] Không có `any` type trong production code
-   - [ ] Tất cả `req.body` có interface/zod schema
-   - [ ] Không lộ stack trace (`NODE_ENV === 'production'`)
-   - [ ] `.env` không commit, có `.env.example`
-   - [ ] Rate limiting trên auth endpoints
-   - [ ] Helmet bật
+   - [x] `tsc --noEmit` không có lỗi
+   - [x] Không có `any` type trong production code
+   - [x] Tất cả `req.body` có interface/zod schema
+   - [x] Không lộ stack trace (`NODE_ENV === 'production'`)
+   - [x] `.env` không commit, có `.env.example`
+   - [x] Rate limiting trên auth endpoints
+   - [x] Helmet bật
 
 ---
 
@@ -2036,14 +2036,14 @@ export default function Nav() {
 
 **Checklist**:
 
-- [ ] `src/pages/ThucChien/index.tsx` — orchestrator, `useProgress('module_07', 8)`
-- [ ] `src/pages/ThucChien/_helpers.tsx` + `_toc.ts`
-- [ ] Lesson01–08 (8 bước build Social Blog API):
-- [ ] Bước 1: `tsconfig.json` strict + project structure
-- [ ] Bước 2: Tất cả interfaces trước khi viết code
-- [ ] Bước 7: Pattern nhất quán — `asyncHandler` + `AppError` + `sendSuccess<T>`
-- [ ] Bước 8: Pre-deploy checklist TypeScript (7 items)
-- [ ] `src/pages/ThucChien/ProjectSection.tsx`
+- [x] `src/pages/ThucChien/index.tsx` — orchestrator, `useProgress('module_07', 8)`
+- [x] `src/pages/ThucChien/_helpers.tsx` + `_toc.ts`
+- [x] Lesson01–08 (8 bước build Social Blog API):
+- [x] Bước 1: `tsconfig.json` strict + project structure
+- [x] Bước 2: Tất cả interfaces trước khi viết code
+- [x] Bước 7: Pattern nhất quán — `asyncHandler` + `AppError` + `sendSuccess<T>`
+- [x] Bước 8: Pre-deploy checklist TypeScript (7 items)
+- [x] `src/pages/ThucChien/ProjectSection.tsx`
 
 **Output**: `src/pages/ThucChien/` folder (cùng cấu trúc với NenTang/)
 
@@ -2051,23 +2051,23 @@ export default function Nav() {
 
 ## 10. CHECKLIST REVIEW TRƯỚC KHI SHIP MỖI PAGE
 
-- [ ] **TypeScript**: page file là `.tsx`, không có `any` untyped
-- [ ] **Components**: dùng `<LessonCard>`, `<CodeBlock>`, `<Badge>`, `<Callout>` — không inline HTML duplicate
-- [ ] **Font**: IBM Plex Sans / Be Vietnam Pro / JetBrains Mono — class CSS đúng (dùng từ `shared.css`)
-- [ ] **Nav**: `<Nav>` component, NavLink active tự detect route hiện tại
-- [ ] **Progress**: `useProgress(moduleId, total)` hook wired — complete button hoạt động
-- [ ] **Code lessons**: 100% TypeScript (`.ts` extension, có type annotations, không có untyped `any`)
-- [ ] **Mỗi lesson**: đủ 6 sub-sections (Khái niệm, Luồng, Code, Giải thích, Lỗi, Bài tập)
-- [ ] **Priority badge**: mỗi `<LessonCard>` có `priority` prop
-- [ ] **TS badge**: `<Badge variant="ts" />` trong mỗi lesson
-- [ ] **Copy button**: mỗi `<CodeBlock>` tự có copy button
-- [ ] **Warn + Note callout**: ít nhất 1 mỗi loại mỗi lesson
-- [ ] **Bài tập**: 3 cấp (🟢🟡🔴) + hint toggle
-- [ ] **Complete button**: lưu localStorage, data-lesson attribute đúng
-- [ ] **Related topics**: cuối trang, 3 cột (Cần biết trước / Học tiếp / Cùng chủ đề)
-- [ ] **Module footer nav**: link trang trước + trang sau
-- [ ] **Không dùng thư viện JS ngoài** cho UI (vanilla JS only)
-- [ ] **Tiếng Việt**: dấu hiển thị đúng
+- [x] **TypeScript**: page file là `.tsx`, không có `any` untyped
+- [x] **Components**: dùng `<LessonCard>`, `<CodeBlock>`, `<Badge>`, `<Callout>` — không inline HTML duplicate
+- [x] **Font**: IBM Plex Sans / Be Vietnam Pro / JetBrains Mono — class CSS đúng (dùng từ `shared.css`)
+- [x] **Nav**: `<Nav>` component, NavLink active tự detect route hiện tại
+- [x] **Progress**: `useProgress(moduleId, total)` hook wired — complete button hoạt động
+- [x] **Code lessons**: 100% TypeScript (`.ts` extension, có type annotations, không có untyped `any`)
+- [x] **Mỗi lesson**: đủ 6 sub-sections (Khái niệm, Luồng, Code, Giải thích, Lỗi, Bài tập)
+- [x] **Priority badge**: mỗi `<LessonCard>` có `priority` prop
+- [x] **TS badge**: `<Badge variant="ts" />` trong mỗi lesson
+- [x] **Copy button**: mỗi `<CodeBlock>` tự có copy button
+- [x] **Warn + Note callout**: ít nhất 1 mỗi loại mỗi lesson
+- [x] **Bài tập**: 3 cấp (🟢🟡🔴) + hint toggle
+- [x] **Complete button**: lưu localStorage, data-lesson attribute đúng
+- [x] **Related topics**: cuối trang, 3 cột (Cần biết trước / Học tiếp / Cùng chủ đề)
+- [x] **Module footer nav**: link trang trước + trang sau
+- [x] **Không dùng thư viện JS ngoài** cho UI (vanilla JS only)
+- [x] **Tiếng Việt**: dấu hiển thị đúng
 
 ---
 
