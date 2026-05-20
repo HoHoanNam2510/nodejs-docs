@@ -1893,16 +1893,18 @@ export default function Nav() {
 
 **Checklist**:
 
-- [ ] `src/pages/ExpressCore/index.tsx` — orchestrator, `useProgress('module_02', 10)`
-- [ ] `src/pages/ExpressCore/_helpers.tsx` — `Sec`, `Flow`
-- [ ] `src/pages/ExpressCore/_toc.ts` — 10 TOC_LINKS
-- [ ] Lesson01–10: tất cả code TS
-- [ ] Bài 8: Declaration Merging cho `req.user`
-- [ ] Tab "Sai lầm": bài 4, 5, 8, 9
-- [ ] Tab "So sánh JS→TS": bài 2, 3, 5, 6, 9
-- [ ] `src/pages/ExpressCore/ProjectSection.tsx` — Todo API TypeScript
+- [x] `src/pages/ExpressCore/index.tsx` — orchestrator, `useProgress('module_02', 10)`
+- [x] `src/pages/ExpressCore/_helpers.tsx` — `Sec`, `Flow`
+- [x] `src/pages/ExpressCore/_toc.ts` — 10 TOC_LINKS
+- [x] Lesson01–10: tất cả code TS
+- [x] Bài 8: Declaration Merging cho `req.user`
+- [x] Tab "Sai lầm": bài 4, 5, 8, 9
+- [x] Tab "So sánh JS→TS": bài 2, 3, 5, 6, 9
+- [x] `src/pages/ExpressCore/ProjectSection.tsx` — Todo API TypeScript
 
 **Output**: `src/pages/ExpressCore/` folder (cùng cấu trúc với NenTang/)
+
+> **✅ COMPLETED** — `npx tsc --noEmit && npm run build` thành công, 0 TypeScript errors. 88 modules transformed. Xóa stub `ExpressCore.tsx` để folder/index.tsx resolve đúng.
 
 ---
 
