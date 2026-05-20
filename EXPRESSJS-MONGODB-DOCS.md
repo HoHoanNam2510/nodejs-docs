@@ -1950,15 +1950,17 @@ export default function Nav() {
 
 **Checklist**:
 
-- [ ] `src/pages/ExpressNangCao/index.tsx` — orchestrator, `useProgress('module_03', 9)`
-- [ ] `src/pages/ExpressNangCao/_helpers.tsx` + `_toc.ts`
-- [ ] Lesson01–09: dùng `zod` thay `express-validator`
-- [ ] Bài 4: `z.infer<typeof Schema>` — auto-generate type
-- [ ] Bài 8: `AppError` class + `asyncHandler` wrapper
-- [ ] Bài 9: `ApiResponse<T>` generic interface
-- [ ] `src/pages/ExpressNangCao/ProjectSection.tsx` — Refactor Todo API
+- [x] `src/pages/ExpressNangCao/index.tsx` — orchestrator, `useProgress('module_03', 9)`
+- [x] `src/pages/ExpressNangCao/_helpers.tsx` + `_toc.ts`
+- [x] Lesson01–09: dùng `zod` thay `express-validator`
+- [x] Bài 4: `z.infer<typeof Schema>` — auto-generate type
+- [x] Bài 8: `AppError` class + `asyncHandler` wrapper
+- [x] Bài 9: `ApiResponse<T>` generic interface
+- [x] `src/pages/ExpressNangCao/ProjectSection.tsx` — Refactor Todo API
 
 **Output**: `src/pages/ExpressNangCao/` folder (cùng cấu trúc với NenTang/)
+
+> **✅ COMPLETED** — `npx tsc --noEmit && npm run build` thành công, 0 TypeScript errors. 101 modules transformed. Xóa stub `ExpressNangCao.tsx` để folder/index.tsx resolve đúng.
 
 ---
 
